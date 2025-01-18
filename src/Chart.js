@@ -1,24 +1,28 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer} from "recharts";
 
-const data = [
-    { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
-];
+const Chart = ({data, }) =>{
 
-
-//Create a component to display your charts using the library you installed.
-function Chart(){
+  const chartData = Array.isArray(data) ? data.map((value, index) => ({
+    name: index,
+    value: value
+  })) : [];
+  
     return(
-        <BarChart width={600} height={300} data={data}>
-         <CartesianGrid strokeDasharray="3 3" />
-         <XAxis dataKey="name" />
-         <YAxis />
-         <Tooltip />
-         <Legend />
-         <Bar dataKey="pv" fill="#8884d8" />
-         <Bar dataKey="uv" fill="#82ca9d" />
-       </BarChart>
-     );
-}
+      <ResponsiveContainer width="100%" height={400}>
+      <LineChart data={chartData}>
+          <XAxis dataKey="name" hide={true}/>
+          <YAxis domain={[0, 100]} />
+          <Line 
+            type="monotone"
+            dataKey="value" 
+            stroke="#8884d8" 
+            dot={false}
+            isAnimationActive={false}
+          />
+      </LineChart></ResponsiveContainer>
+   ); };
+//Create a component to display your charts using the library you installed.
+
 
 export default Chart;

@@ -3,7 +3,7 @@ import Chart from './Chart';
 
 
 //This will be the main container for your dashboard elements.
-function Dashboard(){
+function Dashboard(data){
     return(
         <div>
             <h1>Dashboard</h1>
