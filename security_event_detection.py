@@ -1,9 +1,10 @@
 
 import psutil
-import os
 import win32evtlog
 import ctypes
+import requests
 
+#check if run by admin
 def is_admin():
     try:
         return ctypes.windll.shell32.IsUserAnAdmin()
@@ -11,7 +12,6 @@ def is_admin():
         return False
     
 def monitor_security_events():
-
     # Recent Securty Events
     if is_admin():
     
@@ -38,15 +38,48 @@ def monitor_security_events():
             open_suspicious_ports.append(conn.laddr.port)
     return open_suspicious_ports
 
+# Get running process currently running
 def get_process_info():
-    processes = []
+    processes = {}
     for proc in psutil.process_iter(['pid', 'name', 'username', 'cpu_percent', 'memory_percent']):
         try:
-            processes.append(proc.info)
+            curr_proc = proc.info
+            if curr_proc['name'] not in processes:
+                processes[curr_proc['name']] = proc.info
+            else:
+                prev = processes[curr_proc['name']]
+                prev['cpu_percent'] += curr_proc['cpu_percent']
+                prev['memory_percent'] += curr_proc['memory_percent']
+                processes[curr_proc['name']] = prev
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             pass
     return processes
 
-test = monitor_security_events()
+#Get recent news 
+def get_recent_topstories():
+    #Get IDs of top stories from hacker news
+    base_url ="https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
+    top_stories = []
+    
+    response = requests.get(base_url)
+    data = response.json()
 
-# print(test)
+    #Top 20 stories
+    for story_id in data[0:20]:
+        story = f"https://hacker-news.firebaseio.com/v0/item/{story_id}.json?print=pretty"
+        response_check = requests.get(story)
+        
+        top_stories.append({
+            "title":response_check.json()["title"],
+            "url": response_check.json()["url"]
+        })
+
+    return top_stories
+
+# test = monitor_security_events()
+test = get_process_info()
+print(test.keys())
+# for x in test:
+#     print(x)
+# cve = get_recent_topstories()
+# print(cve)
