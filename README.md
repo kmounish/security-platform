@@ -5,8 +5,10 @@
 ### `npm run build`
 
 ### TODO:
+
 ~- Display Metrics on Dashboard~
- - Real-time metrics over intervals
- - Process monitoring
- - Create Alerting System from Metrics
- - Basic Authentication
+~- Real-time metrics over intervals~
+
+- Process monitoring
+- Create Alerting System from Metrics
+- Basic Authentication

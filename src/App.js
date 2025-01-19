@@ -78,17 +78,17 @@ function App() {
 
           {/* CPU Usage Graph */}
           <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-bold text-center mb-4">CPU Usage</h2>
+              <h2 className="text-xl font-bold text-center mb-4">CPU % Usage</h2>
               <Chart data={metricDictionary["cpu"]}/>
           </div>
           {/* Memory Usage Graph */}
           <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-bold text-center mb-4">Memory Usage</h2>
+              <h2 className="text-xl font-bold text-center mb-4">Memory % Usage</h2>
               <Chart data={metricDictionary["memory"]} />
           </div>
           {/* Disk Usage Graph */}
           <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-bold text-center mb-4">Disk Usage</h2>
+              <h2 className="text-xl font-bold text-center mb-4">Disk % Usage</h2>
               <Chart data={metricDictionary["disk"]} />
           </div>
  
