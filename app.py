@@ -22,7 +22,7 @@ def get_top_stories():
 @app.route('/api/process-info')
 def process_info():
     process = security_event_detection.get_process_info()
-    return jsonify(process)
+    return process
 
 
 if __name__ == '__main__':

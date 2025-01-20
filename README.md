@@ -8,7 +8,8 @@
 
 ~- Display Metrics on Dashboard~
 ~- Real-time metrics over intervals~
+~- Process Monitoring~
+~- Display Process Mointoring with sort capabilities~
 
-- Process monitoring
 - Create Alerting System from Metrics
 - Basic Authentication

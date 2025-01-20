@@ -41,19 +41,29 @@ def monitor_security_events():
 # Get running process currently running
 def get_process_info():
     processes = {}
+    final = []
     for proc in psutil.process_iter(['pid', 'name', 'username', 'cpu_percent', 'memory_percent']):
         try:
             curr_proc = proc.info
+            ignore = ['','System Idle Process']
+            if curr_proc['name'] in ignore:
+                continue
+            
             if curr_proc['name'] not in processes:
+                proc.info['cpu_percent'] = round(curr_proc['cpu_percent'],2)
+                proc.info['memory_percent'] = round(curr_proc['memory_percent'],2)
                 processes[curr_proc['name']] = proc.info
             else:
                 prev = processes[curr_proc['name']]
-                prev['cpu_percent'] += curr_proc['cpu_percent']
-                prev['memory_percent'] += curr_proc['memory_percent']
+                prev['cpu_percent'] = round(float(curr_proc['cpu_percent']) + float(prev['cpu_percent']),2)
+                prev['memory_percent'] = round(float(curr_proc['memory_percent']) + float(prev['memory_percent']),2)
                 processes[curr_proc['name']] = prev
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             pass
-    return processes
+    
+    values = processes.values()
+    
+    return list(values)
 
 #Get recent news 
 def get_recent_topstories():
@@ -77,8 +87,8 @@ def get_recent_topstories():
     return top_stories
 
 # test = monitor_security_events()
-test = get_process_info()
-print(test.keys())
+# test = get_process_info()
+# print(test.keys())
 # for x in test:
 #     print(x)
 # cve = get_recent_topstories()
