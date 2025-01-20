@@ -4,12 +4,13 @@
 
 ### `npm run build`
 
-### TODO:
-
-~- Display Metrics on Dashboard~
-~- Real-time metrics over intervals~
-~- Process Monitoring~
-~- Display Process Mointoring with sort capabilities~
-
+## TODO:
 - Create Alerting System from Metrics
 - Basic Authentication
+
+## Current Functionality:
+- Display System Info on Dashboard
+- CPU, RAM, Disk Usage Displayed
+  - Line Graph with updating metrics
+- Processes Info - Displayed on dashboard
+  - Sorting based on CPU, RAM, or Name implemented  
