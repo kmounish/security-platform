@@ -6,6 +6,9 @@
 
 ## TODO:
 - Create Alerting System from Metrics
+- Network traffic monitoring
+- File System change detection
+- Security event correlation
 - Basic Authentication
 
 ## Current Functionality:
