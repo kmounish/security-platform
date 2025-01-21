@@ -15,7 +15,6 @@ function App() {
 		cpu: [],
 		disk: [],
 	});
-	// console.log('test')
 	const MAX_ARRAY_SIZE = 20;
 
 	useEffect(() => {
@@ -55,6 +54,7 @@ function App() {
 		return () => clearInterval(intervalFetch);
 	}, []);
 
+	// TODO: move in to the useEffect so they are together?
 	const processFetch = async () => {
 		try {
 			const response = await fetch("http://127.0.0.1:5000/api/process-info");
@@ -70,6 +70,7 @@ function App() {
 		return () => clearInterval(intervalFetch);
 	}, []);
 
+	//Sort options
 	const handleSort = (key) => {
 		let direction = "ascending";
 		if (sortConfig.key === key && sortConfig.direction === "ascending") {
@@ -78,6 +79,7 @@ function App() {
 		setSortConfig({ key, direction });
 	};
 
+	//Sorting Processes
 	const sortedData = React.useMemo(() => {
 		if (!sortConfig.key) return processes;
 
@@ -137,10 +139,11 @@ function App() {
 							<p>Loading...</p>
 						)}
 						{data ? <p>CPU Percent: {data.cpu_percent}</p> : <p>Loading...</p>}
-						<p>{navigator.platform || "Unkown"}</p>
+						<p>OS: {navigator.platform || "Unkown"}</p>
 						<p>{navigator.deviceMemory || "Unkown"}</p>
-						{navigator.userAgent.split(") ")[0].split("(")[1]}
-						<p>{metricDictionary ? metricDictionary["memory"] : 0}</p>
+						<p>
+							User Agent: {navigator.userAgent.split(") ")[0].split("(")[1]}
+						</p>
 					</div>
 				</div>
 
@@ -212,6 +215,32 @@ function App() {
 									</td>
 								</tr>
 							))}
+						</tbody>
+					</table>
+				</div>
+
+				{/* Hacker News Feed */}
+				<div className="bg-white rounded-lg shadow-md p-6 overflow-auto max-h-96">
+					<table max-h-96>
+						<thead>
+							<tr>
+								<th className="px-6 py-3 text-left text-sm font-semibold text-gray-600 cursor-pointer">
+									<div
+										className="flex items-center space-x-1"
+										onClick={() => handleSort("name")}
+									>
+										<span>Recent Top Stories</span>
+									</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{/* CHANGE FOR NEWS API */}
+							<tr key={index} className="hover:bg-gray-50">
+								<td className="px-6 py-4 text-sm text-gray-800">
+									{item["name"]}
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
